@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useTransition } from 'react';
 import { Equipment, SlotBooking, ConflictCase } from '@/types';
+import { INITIAL_EQUIPMENT, INITIAL_BOOKINGS, INITIAL_CONFLICTS } from '@/data/mockData';
 import { Navbar } from '@/components/Navbar';
 import { EquipmentCard } from '@/components/EquipmentCard';
 import { BookingModal } from '@/components/BookingModal';
@@ -33,10 +34,10 @@ export default function Home() {
     equipment: Equipment;
     relevanceScore?: number;
     matchReason?: string;
-  }[]>([]);
+  }[]>(INITIAL_EQUIPMENT.map(eq => ({ equipment: eq })));
   
-  const [bookings, setBookings] = useState<SlotBooking[]>([]);
-  const [conflicts, setConflicts] = useState<ConflictCase[]>([]);
+  const [bookings, setBookings] = useState<SlotBooking[]>(INITIAL_BOOKINGS);
+  const [conflicts, setConflicts] = useState<ConflictCase[]>(INITIAL_CONFLICTS);
   const [isPending, startTransition] = useTransition();
 
   const [selectedEquipmentForBooking, setSelectedEquipmentForBooking] = useState<Equipment | null>(null);
@@ -171,8 +172,8 @@ export default function Home() {
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Try: 'Need equipment to test aerodynamic drag on drone wings' or 'RF antenna return loss'..."
-                      className="w-full pl-12 pr-28 py-4 bg-slate-900/90 border border-slate-700 rounded-2xl text-xs sm:text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-xl"
+                      placeholder="Search equipment, e.g. 'SEM microscope' or 'RF antenna'..."
+                      className="w-full pl-12 pr-32 py-3.5 bg-slate-900/90 border border-slate-700 rounded-2xl text-xs sm:text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-xl"
                       aria-label="Search laboratory equipment semantically"
                     />
                     {searchQuery ? (
